@@ -1,0 +1,58 @@
+.login {
+    margin-top: 6vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        padding: 1vh 1vw;
+        width: 55%;
+        align-self: center;
+        gap: 2vh;
+
+        .form-check {
+            text-align: left;
+            display: flex;
+            gap: 1vw;
+            place-items: center;
+
+            .radio {
+                align-self: center;
+            }
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .form-group label, .row p {
+            margin-bottom: 1vh;
+        }
+
+        .radio.two {
+            display: flex;
+            flex-direction: column;
+            gap: 3vh;
+        }
+
+        img {
+            width: 55%;
+        }
+    }
+
+    .spaced-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 1vw;
+        width: calc(100% - 1vw);
+    }
+}

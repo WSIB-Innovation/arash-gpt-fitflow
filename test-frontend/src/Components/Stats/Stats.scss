@@ -1,0 +1,19 @@
+.stats {
+
+
+    .exercise-row {
+        display: flex;
+        // justify-content: space-between;
+        margin-bottom: 4vh;
+
+        .exercise {
+            margin-left: 3.02vw;
+            margin-right: 3vw;
+        }
+
+        .pr-details {
+            display: flex;
+            justify-content: space-evenly;
+        }
+    }
+}

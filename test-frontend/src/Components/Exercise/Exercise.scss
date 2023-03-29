@@ -1,0 +1,70 @@
+.exercise {
+    
+    border: 2px solid #E8E8E8;
+    box-shadow: 0px 6px 7px rgba(180, 180, 180, 0.1);
+    border-radius: 0.521vw;
+    padding: 2vh 1.5vw;
+    max-height: 40vh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .feature-title {
+        cursor: pointer;
+
+        &:hover {
+            color: blue;
+        }
+    } 
+
+    &.expanded {
+        max-height: 100%;
+    }
+
+    .details {
+        display: flex;
+        justify-content: space-evenly;
+
+
+        span {
+            font-weight: bold;
+        }
+    }
+
+    img {
+        // max-width: 70%;
+        // height: auto;
+        margin-bottom: 1vh;
+        height: 63%;
+        object-fit: contain;
+
+        &.active {
+            height: 40%;
+        }
+    }
+
+    .expand-container {
+        position: absolute;
+        background: #efefef;
+        bottom: 0;
+        height: 3vh;
+        width: 100%;
+        margin-left: -1.5vw;
+        display: flex;
+        flex-direction: row-reverse;
+        padding-right: 0.75vw;
+
+
+        i {
+            font-size: 1.5vw;
+            cursor: pointer;
+            display: none;
+
+            &.active {
+                display: block;
+            }
+        }
+    }
+
+}

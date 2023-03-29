@@ -1,0 +1,60 @@
+.dashboard {
+    margin-top: 6vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 15vh;
+
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header, .subheader {
+        max-width: fit-content;
+    }
+
+    .subheader.main {
+        margin-bottom: 10vh;
+    }
+
+    .workout-box {
+        width: 85%;
+        align-self: center;
+        margin-bottom: 4vh;
+    }
+
+    .workout-header {
+        margin-bottom: 3vh;
+    }
+
+    .exercise-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4vh;
+    }
+
+    .gen-workout {
+        height: 40px;
+        width: 40px;
+    }
+
+    .dropdowns {
+        margin-bottom: 2vh;
+    }
+
+    .center {
+        display: flex;
+        gap: 1vw;
+        height: 100%;
+        align-items: center;
+
+        .checkbox {
+            margin-top: 2px;
+        }
+    }
+    
+    .above-workout {
+        margin-bottom: 3vh;
+    }
+}
