@@ -19,9 +19,22 @@ function Profile() {
     const [age, setAge] = useState(0);
     const [height, setHeight] = useState(0);
     const [weight, setWeight] = useState(0);
+    const [multiValueI, setMultiValueI] = useState([]);
+    const [multiValueA, setMultiValueA] = useState([]);
 
     useEffect(() => {
-        if (goal == 'Gain Muscle') document.getElementById("muscle").checked = true;
+        if (goal.startsWith('Gain Muscle')) {
+            let goals = document.getElementsByClassName('muscleMaintain');
+            if (goal.includes('growing')) {
+                goals = document.getElementsByClassName('muscleGrow');
+            }
+            console.log(goals);
+            for (let i = 0; i < goals.length; ++i) {
+                goals[i].checked = true;
+                console.log(goals[i]);
+            }
+            document.getElementById("muscle").checked = true;
+        }
         else if (goal == 'Lose Fat') document.getElementById("fat").checked = true;
         else if (goal == 'Tone Body') document.getElementById("tone").checked = true;
         else if (goal == 'Improve Endurance') document.getElementById("endurance").checked = true;
@@ -43,9 +56,29 @@ function Profile() {
         { value: 'No Equipment', label: 'No Equipment' },
     ];
 
+    const sports = [
+        { value: 'soccer', label: 'Soccer' },
+        { value: 'basketball', label: 'Basketball' },
+        { value: 'football', label: 'Football' },
+        { value: 'volleyball', label: 'Volleyball' },
+        { value: 'running', label: 'Running' },
+        { value: 'rugby', label: 'Rugby' },
+        { value: 'hockey', label: 'Hockey' },
+        { value: 'tennis', label: 'Tennis' },
+        { value: 'baseball', label: 'Baseball' },
+    ]
+
 
     function handleEquipmentChange(option) {
         setEquipment(option);
+    }
+
+    function handleMultiChangeI(option) {
+        setMultiValueI(option);    
+    }
+
+    function handleMultiChangeA(option) {
+        setMultiValueA(option);    
     }
 
     async function submitProfile() {
@@ -54,16 +87,31 @@ function Profile() {
 
         try {
             const id = localStorage.getItem('id');
-            const res = await axios.post(`http://localhost:5000/users/update_user/${id}`, {
+            let queryArr = [];
+            for (const item of Object.values(multiValueA)) {
+                queryArr.push(item.value);
+            }
+            const activities = queryArr.join();
+
+            queryArr=[];
+            for (const item of Object.values(multiValueI)) {
+                queryArr.push(item.value);
+            }
+            const injuries = queryArr.join();
+
+
+            await axios.post(`http://localhost:5000/users/update_user/${id}`, {
                 name: document.getElementById("firstName").value + ' ' + document.getElementById("lastName").value,
                 email: email,
                 goal: fitGoal,
                 age: age,
                 height: Number(document.getElementById('heightFeet').value) * 12 + Number(document.getElementById('heightInches').value),
                 weight: weight,
-                equipment: equipment.value
+                equipment: equipment.value,
+                injuries: injuries,
+                activities: activities
             });
-            console.log(res);
+            window.location.reload();
         } catch (err) {
             console.error(err);
         }
@@ -82,7 +130,7 @@ function Profile() {
 
     async function getInfo() {
         try {
-            const id = window.localStorage.id;
+            const id = localStorage.getItem('id');
             const res = await axios.get(`http://localhost:5000/users/${id}`);
             if (res) {
                 console.log(res);
@@ -93,6 +141,20 @@ function Profile() {
                 setHeight(res.data.height);
                 setWeight(res.data.weight);
                 setEquipment({value: res.data.equipment, label: res.data.equipment});
+
+                const activityArr = res.data.activities?.split(',');
+                let activities = [];
+                for (const activity of activityArr) {
+                    activities.push({value: activity, label: capitalize(activity)})
+                }
+                setMultiValueA(activities);
+
+                const injuryArr = res.data.injuries?.split(',');
+                let injuries = [];
+                for (const injury of injuryArr) {
+                    injuries.push({value: injury, label: capitalize(injury)})
+                }
+                setMultiValueI(injuries);
             }
           } catch (err) {
               console.error(err);
@@ -126,7 +188,7 @@ function Profile() {
                     <div className='radio'>
                         <label for="radio">What is your goal?</label>
                         <div className="form-check">
-                            <input className="form-check-input radio" type="radio" name="goalRadio" id="muscle" value="Gain Muscle"/>
+                            <input className="form-check-input radio muscleMaintain muscleGrow" type="radio" name="goalRadio" id="muscle" value="Gain Muscle"/>
                             <label className="form-check-label" for="muscle">
                                 Gain Muscle
                             </label>
@@ -188,6 +250,27 @@ function Profile() {
                                 value={equipment}
                                 options={gymOptions}
                                 onChange={handleEquipmentChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label for="inputEquipment">Focussed Activities</label>
+                            <CreatableSelect
+                                name="activities"
+                                placeholder="None"
+                                value={multiValueA}
+                                options={sports}
+                                onChange={handleMultiChangeA}
+                                isMulti
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label for="inputEquipment">Injuries</label>
+                            <CreatableSelect
+                                name="injuries"
+                                placeholder="None"
+                                value={multiValueI}
+                                onChange={handleMultiChangeI}
+                                isMulti
                             />
                         </div>
                     <button type="button" className="btn btn-primary" onClick={()=>submitProfile()}>Submit</button>

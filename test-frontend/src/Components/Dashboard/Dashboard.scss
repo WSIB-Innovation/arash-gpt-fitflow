@@ -22,6 +22,41 @@
         width: 85%;
         align-self: center;
         margin-bottom: 4vh;
+        display: flex;
+        flex-direction: column;
+
+        .timer {
+            padding: 10px;
+            border-radius: 14px;
+            border: 2px grey solid;
+            width: 40%;
+            margin-bottom: 3vh;
+            margin-top: 3vh;
+            align-self: center;
+
+            .time {
+                font-size: 48px;
+            }
+
+            .buttons {
+                display: flex;
+                justify-content: center;
+                gap: 5vw;
+
+                button {
+                    border-radius: 8px;
+                    color: white;
+                }
+
+                .start {
+                    background: limegreen;
+                }
+
+                .reset {
+                    background: red;
+                }
+            }
+        }
     }
 
     .workout-header {
@@ -56,5 +91,28 @@
     
     .above-workout {
         margin-bottom: 3vh;
+    }
+
+    .centerAlign {
+        align-self: center;
+    }
+
+    .activities {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .addExercise {
+        display: flex;
+        justify-content: center;
+        height: 40vh;
+        
+        h1 {
+            cursor: pointer;
+            font-size: 96px;
+            width: fit-content;
+            align-self: center;
+        }
     }
 }

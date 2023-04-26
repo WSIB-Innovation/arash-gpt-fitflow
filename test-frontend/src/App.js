@@ -9,6 +9,7 @@ import Profile from './Components/Profile/Profile';
 import Signup from './Components/Signup/Signup';
 import Login from './Components/Login/Login';
 import Stats from './Components/Stats/Stats';
+import FitBot from './Components/FitBot/FitBot';
 
 function App() {
   const log = localStorage.getItem('token')?.length;
@@ -25,7 +26,8 @@ function App() {
         console.log(res);
         return res;
       } catch (err) {
-          localStorage.clear()
+          localStorage.removeItem('id');
+          localStorage.removeItem('token');
           return false;
       }
     }
@@ -52,6 +54,7 @@ function App() {
           <Route path="/exercises" element={log ? <Database/> : <Login/>} />
           <Route path="/profile" element={log ? <Profile/> : <Login/>} />
           <Route path="/stats" element={log ? <Stats/> : <Login/>} />
+          <Route path="/chatbot" element={log ? <FitBot/> : <Login/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
         </Routes>

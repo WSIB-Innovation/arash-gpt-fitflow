@@ -1,0 +1,24 @@
+.fitBot {
+    margin-top: 6vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: clip;
+
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+
+        .bot {
+            margin-top: 2vh;
+            position: relative;
+            height: 75vh;
+            // width: 700px;
+
+            .cs-avatar {
+                margin-left: 4px;
+                margin-top: 2px;
+            }
+        }
+    }
+}

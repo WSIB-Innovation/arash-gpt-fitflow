@@ -6,7 +6,8 @@ const Navbar = (props) => {
   const navigate = useNavigate();
 
   function logOut() {
-    window.localStorage.clear();
+    localStorage.removeItem('id');
+    localStorage.removeItem('token');
     navigate('/login');
     window.location.reload();
   }
@@ -42,8 +43,8 @@ const Navbar = (props) => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              FitFlow Bot
+            <a className="nav-link" href="../chatbot">
+              FitBot
             </a>
           </li>
           <li className="nav-item">

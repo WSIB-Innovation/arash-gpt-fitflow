@@ -57,6 +57,7 @@ function Signup() {
             });
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("id", res.data.id);
+            console.log('signedup');
             navigate('/');
             window.location.reload();
         } catch (err) {
@@ -173,7 +174,7 @@ function Signup() {
                             <input type="text" className="form-control" id="customEquipment" placeholder="Custom Equipment"/>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary" onClick={()=>submitSignup()}>Submit</button>
+                    <button type='button' className="btn btn-primary" onClick={()=>submitSignup()}>Submit</button>
                 </form> }
             </div>
         </div>
