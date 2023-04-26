@@ -3,8 +3,14 @@ from extensions import db
 from .models import User
 from uuid import uuid4
 import json
+import openai
+
 
 blueprint = Blueprint("user", __name__, url_prefix='/users')
+openai.api_key = '6f462a816c194b438986a3eeac099694'
+openai.api_type = "azure"
+openai.api_base = "https://fitflow.openai.azure.com/"
+openai.api_version = "2023-03-15-preview"
 
 @blueprint.route("/")
 def hello():
@@ -14,7 +20,8 @@ def hello():
 
 @blueprint.route('/<int:id>')
 def get_user_by_id(id):
-    user = db.get_or_404(User, id)
+    user = User.query.get(id)
+    print(user)
     return jsonify(user)
 
 @blueprint.route('/login', methods=['GET','POST'])
@@ -32,8 +39,11 @@ def login_user():
 @blueprint.route('/login/<int:id>')
 def is_user_logged_in(id):
     user = User.query.get(id)
-    userToken = user.token
-    return json.dumps(userToken == request.args.get('token'))
+    if user:
+        userToken = user.token
+        return json.dumps(userToken == request.args.get('token'))
+    else:
+        return 'Login Failed', 401
 
 @blueprint.route('/add_user', methods=['GET', 'POST'])
 def post_user():
@@ -69,13 +79,44 @@ def update_user(id):
     user_data = request.get_json()
 
     user = User.query.get(id)
-    user.email = user_data['email']
-    user.goal = user_data['goal']
-    user.age=user_data['age']
-    user.height=user_data['height']
-    user.weight=user_data['weight']
-    user.equipment=user_data['equipment']
+    if ("email" in user_data):
+        user.email = user_data['email']
+    if ('goal'  in user_data):
+        user.goal = user_data['goal']
+    if ('age'  in user_data):
+        user.age = user_data['age']
+    if ('height'  in user_data):
+        user.height = user_data['height']
+    if ('weight'  in user_data):
+        user.weight = user_data['weight']
+    if ('equipment'  in user_data):
+        user.equipment = user_data['equipment']
+    if ('name'  in user_data):
+        user.name = user_data['name']
+    if ('injuries'  in user_data):
+        user.injuries = user_data['injuries']
+    if ('activities'  in user_data):
+        user.activities = user_data['activities']
+    if ('workout'  in user_data):
+        user.workout = json.dumps(user_data['workout'])
+        
+    print(user_data)
 
     db.session.commit()
 
     return jsonify(user), 201
+
+
+@blueprint.route('/fitbot', methods=['GET'])
+def askFitBot():
+    messages = json.loads(request.args.get('messages'))
+
+    response = openai.ChatCompletion.create(
+        engine="gpt-35-turbo",
+        messages=messages,
+    )
+
+    print(response.choices[0].message)
+
+
+    return response.choices[0].message, 201

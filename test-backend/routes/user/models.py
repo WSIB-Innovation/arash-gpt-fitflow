@@ -15,6 +15,8 @@ class User(db.Model):
     age: int
     fat: int
     workout: str
+    injuries: str
+    activities: str
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
@@ -27,11 +29,13 @@ class User(db.Model):
     weight = db.Column(db.Integer)
     age = db.Column(db.Integer)
     fat = db.Column(db.Integer)
-    workout = db.Column(db.String)
+    workout = db.Column(db.JSON)
+    injuries = db.Column(db.String(2048))
+    activities = db.Column(db.String(2048))
 
     # def __init__(self, name, email):
     #     self.name = name
     #     self.email = email
 
-    def __repr__(self):
-        return '<User with name %r>' % self.username
+    # def __repr__(self):
+    #     return '<User with name %r>' % self.username
