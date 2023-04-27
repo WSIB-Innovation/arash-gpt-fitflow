@@ -1,0 +1,9 @@
+dataclasses
+flask
+openai
+json
+datetime
+environs
+uuid
+flask_cors
+flask_sqlalchemy
