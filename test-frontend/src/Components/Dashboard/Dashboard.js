@@ -1,19 +1,12 @@
 import React, { useState, useEffect }from 'react';
-// import Logo from "../../icons/LandingLogo.svg"
-// // import './SearchBar.css';
 import './Dashboard.scss';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../Exercise/Exercise.js"
 import Exercise from '../Exercise/Exercise.js';
 import CreatableSelect from 'react-select/creatable';
-import Creatable, { useCreatable } from 'react-select/creatable';
 
-
-// Icons
 
 function Dashboard() {
-    let navigate = useNavigate();
     const [workout, setWorkout] = useState();
     const [name, setName] = useState();
     const [exerciseRows, setExerciseRows] = useState([]);
@@ -76,7 +69,6 @@ function Dashboard() {
 
     useEffect(() => {
         let interval;
-        console.log(time);
         if (timerActive) {
             interval = setInterval(() => setTime(time + 1), 1000);
         }
@@ -146,7 +138,7 @@ function Dashboard() {
         const cater = document.getElementById("sports").checked;
 
         try {
-            const res = await axios.post(`http://localhost:5000/exercises/generate_workout`, {
+            await axios.post(`http://localhost:5000/exercises/generate_workout`, {
                 injury: injury,
                 query: query,
                 num: multiValueNum?.value ?? false,
@@ -269,7 +261,6 @@ function Dashboard() {
     function handleMultiChangeE(option) {
         setMultiValueE(option);
         setExerciseRows(exerciseRows);
-        console.log(multiValueE);
     }
 
     function handleMultiChangeNum(option) {

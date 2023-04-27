@@ -33,9 +33,3 @@ class User(db.Model):
     injuries = db.Column(db.String(2048))
     activities = db.Column(db.String(2048))
 
-    # def __init__(self, name, email):
-    #     self.name = name
-    #     self.email = email
-
-    # def __repr__(self):
-    #     return '<User with name %r>' % self.username

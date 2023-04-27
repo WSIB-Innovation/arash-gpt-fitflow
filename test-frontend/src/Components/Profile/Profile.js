@@ -1,16 +1,9 @@
 import React, { useEffect, useState }from 'react';
-// import Logo from "../../icons/LandingLogo.svg"
-// // import './SearchBar.css';
 import './Profile.scss';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CreatableSelect from 'react-select/creatable';
-import Creatable, { useCreatable } from 'react-select/creatable';
-
-// Icons
 
 function Profile() {
-    let navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [goal, setGoal] = useState('');
@@ -28,10 +21,8 @@ function Profile() {
             if (goal.includes('growing')) {
                 goals = document.getElementsByClassName('muscleGrow');
             }
-            console.log(goals);
             for (let i = 0; i < goals.length; ++i) {
                 goals[i].checked = true;
-                console.log(goals[i]);
             }
             document.getElementById("muscle").checked = true;
         }
@@ -42,7 +33,6 @@ function Profile() {
             document.getElementById("custom").checked = true;
             setCustomGoal(true);
         }
-        console.log(equipment);
         if (document.getElementById("ageOption" + age)) document.getElementById("ageOption" + age).selected = "selected";
     },[goal,age,equipment]);
 
@@ -133,7 +123,6 @@ function Profile() {
             const id = localStorage.getItem('id');
             const res = await axios.get(`http://localhost:5000/users/${id}`);
             if (res) {
-                console.log(res);
                 setEmail(res.data.email);
                 setName(res.data.name);
                 setGoal(res.data.goal);

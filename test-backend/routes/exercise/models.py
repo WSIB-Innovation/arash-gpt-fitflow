@@ -19,14 +19,12 @@ class Exercise(db.Model):
     name: str
     sets: int
     reps: int
-    # pr: list[{'record': int, 'date': str}]
     prs: str
     desc: str
     
     name = db.Column(db.String(120), nullable=False, primary_key=True)
     sets = db.Column(db.Integer)
     reps = db.Column(db.Integer)
-    # prs = db.relationship('Prtracker', backref='exercise')
     prs = db.Column(db.String(240))
     desc = db.Column(db.String)
 

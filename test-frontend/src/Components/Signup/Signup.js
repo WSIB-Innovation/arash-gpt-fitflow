@@ -1,6 +1,4 @@
 import React, { useState }from 'react';
-// import Logo from "../../icons/LandingLogo.svg"
-// // import './SearchBar.css';
 import './Signup.scss';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -36,13 +34,11 @@ function Signup() {
         
         setbasicInfoSubmitted(true);
         
-        console.log('done');
     }
 
     async function submitSignup() {
         let equipment = (document.querySelector('input[name="equipmentRadio"]:checked').value);
         if (!equipment || !equipment.length) equipment = document.getElementById('customEquipment').value;
-        console.log(age);
 
         try {
             const res = await axios.post(`http://localhost:5000/users/add_user`, {
@@ -57,7 +53,6 @@ function Signup() {
             });
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("id", res.data.id);
-            console.log('signedup');
             navigate('/');
             window.location.reload();
         } catch (err) {

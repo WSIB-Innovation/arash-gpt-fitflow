@@ -1,32 +1,23 @@
 import React, { useState, useEffect } from 'react';
-// import Logo from "../../icons/LandingLogo.svg"
-// // import './SearchBar.css';
 import './Database.scss';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../Exercise/Exercise.js"
 import Exercise from '../Exercise/Exercise.js';
 
-// Icons
-
 function Database() {
-    let navigate = useNavigate();
     const [exercises, setExercises] = useState([]);
 
-    
-    // async function getExercises() {
     useEffect(() => {
         axios.get("http://localhost:5000/exercises/").then(
             res => {
                 setExercises(res.data);
             }
         ).catch(error => {
-            console.log(error);
+            console.error(error);
         });
 
     }, []);
-    // }
-        // getExercises();
+
         const exerciseRows = [];
 
 
@@ -40,8 +31,6 @@ function Database() {
                 </div>
             );
         }
-
-        console.log(exerciseRows);
 
     return (
         <div className='database'>

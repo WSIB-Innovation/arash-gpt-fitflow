@@ -1,33 +1,23 @@
 import React, { useState, useEffect } from 'react';
-// import Logo from "../../icons/LandingLogo.svg"
-// // import './SearchBar.css';
 import './Stats.scss';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../Exercise/Exercise.js"
-import Exercise from '../Exercise/Exercise.js';
 import Chart from 'chart.js/auto'
 
-// Icons
-
 function Stats() {
-    let navigate = useNavigate();
     const [exercises, setExercises] = useState([]);
     const [goal, setGoal] = useState('');
     const [ready, setReady] = useState(false);
 
     
-    // async function getExercises() {
     useEffect(() => {
         axios.get("http://localhost:5000/exercises/").then(
             res => {
                 setExercises(res.data);
-                // console.log(res.data);
-        setReady(true);
-
+                setReady(true);
             }
         ).catch(error => {
-            console.log(error);
+            console.error(error);
         });
 
             const id = window.localStorage.id;
@@ -36,18 +26,16 @@ function Stats() {
                     setGoal(res.data.goal);
                 }
             ).catch(error => {
-                console.log(error);
+                console.error(error);
             });
 
     }, []);
-    // }
-        // getExercises();
+
         const exerciseRows = [];
 
         function handlePrChange(exercise, e) {
             try {
-                const res = axios.post(`http://localhost:5000/exercises/${exercise.name}`, {pr: e?.value});
-                console.log(res);
+                axios.post(`http://localhost:5000/exercises/${exercise.name}`, {pr: e?.value});
             } catch (err) {
                 console.error(err);
             }
@@ -58,7 +46,6 @@ function Stats() {
             const newPRs = document.getElementsByClassName('form-control');
 
             for (let i = 0; i < exercises.length; ++i) {
-                // if ( i ==0 ) console.log((newPRs[i].value && (!exercises[i].prArray || newPRs[i].value != exercises[i].prArray.at(-1))));
                 if (newPRs[i].value && (!exercises[i].prArray || newPRs[i].value != exercises[i].prArray.at(-1))) {
                     handlePrChange(exercises[i], newPRs[i]);
                 }
@@ -94,85 +81,42 @@ function Stats() {
             );
         }
 
-
-        // (async function() {
-        //     const data = [
-        //       { year: 1, count: 25 },
-        //       { year: 2, count: 22 },
-        //       { year: 3, count: 30 },
-        //       { year: 4, count: 28 },
-        //     ];
-          
-        //     new Chart(
-        //       document.getElementById('acquisitions'),
-        //       {
-        //         type: 'line',
-        //         data: {
-        //           labels: [1,2,3],
-        //           datasets: [{
-        //             label: 'My First Dataset',
-        //             data: [65, 59, 80],
-        //             fill: false,
-        //             borderColor: 'rgb(75, 192, 192)',
-        //             tension: 0.1
-        //           }]
-        //         }
-        //       }
-        //     );
-        //   })();
-
         useEffect(() => {
-        for (let i = 0; i < exercises.length; ++i) {
-            (async function() {
-                const data = [
-                  { year: 1, count: 25 },
-                  { year: 2, count: 22 },
-                  { year: 3, count: 30 },
-                  { year: 4, count: 28 },
-                ];
-
-                // console.log( exercises[i].prArray.map((pr, idx) => ({year: idx, count: pr})));
-                // console.log([...Array(exercises[i].prArray.length).keys()]);
-
-                // if(i == 0) {
-              
-
+            for (let i = 0; i < exercises.length; ++i) {
+                (async function() {
                     new Chart(
                     document.getElementById('acquisitions' + exercises[i].name),
                     {
                         type: 'line',
                         data: {
-                        labels: Array.from({length: exercises[i].prArray.length}, (_, i) => i + 1),
-                        datasets: [{
-                            label: 'PR Progression',
-                            data: exercises[i].prArray,
-                            fill: false,
-                            borderColor: 'rgb(75, 192, 192)',
-                            tension: 0.1
-                        }]
+                            labels: Array.from({length: exercises[i].prArray.length}, (_, i) => i + 1),
+                            datasets: [{
+                                label: 'PR Progression',
+                                data: exercises[i].prArray,
+                                fill: false,
+                                borderColor: 'rgb(75, 192, 192)',
+                                tension: 0.1
+                            }]
                         }
-                    }
-                    );
-                // }
-              })();
-        }
-    },[ready]);
+                    });
+                })();
+            }
+        },[ready]);
        
 
     return (
         <div className='stats'>
 
             <div className='container-fluid'>
-            <h1 className='header'>Current Goal</h1>
-            <p>Your current workout goal is to {goal}. Good luck, you got this!</p>
-
+                <h1 className='header'>Current Goal</h1>
+                <p>Your current workout goal is to {goal}. Good luck, you got this!</p>
                 <h1 className='header'>Stat List</h1>
                 <button onClick={submitAll}>Submit</button>
-                        <div className='workout-box'>
-                            <div className='exercises'>
-                                {exerciseRows}
-                            </div>
-                        </div>
+                <div className='workout-box'>
+                    <div className='exercises'>
+                        {exerciseRows}
+                    </div>
+                </div>
             </div>
         </div>
     );

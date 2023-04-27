@@ -3,7 +3,6 @@ import './Login.scss';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-// Icons
 
 function Login() {
     let navigate = useNavigate();
@@ -19,7 +18,6 @@ function Login() {
             });
 
             if (res) {
-                console.log(res);
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("id", res.data.id);
                 navigate('/');

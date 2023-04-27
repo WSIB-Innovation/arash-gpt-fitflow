@@ -1,8 +1,5 @@
 import React, { useEffect, useState }from 'react';
-// import Logo from "../../icons/LandingLogo.svg"
-// // import './SearchBar.css';
 import './FitBot.scss';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator, Avatar } from '@chatscope/chat-ui-kit-react';
@@ -13,7 +10,6 @@ import gpt from '../../images/gpt.png'
 // Icons
 
 function FitBot() {
-    let navigate = useNavigate();
     const [messages, setMessages] = useState([
         {
             message: "Hello, I am your personal Fitness Bot!",
@@ -27,16 +23,14 @@ function FitBot() {
         const id = localStorage.getItem('id');
         axios.get(`http://localhost:5000/users/${id}`).then(
             res => {
-                console.log(res.data);
                 setUserData(res.data);
             }
         ).catch(error => {
-            console.log(error);
+            console.error(error);
         });
     },[]);
 
     async function handleSend(messageText) {
-        console.log(messageText);
         const message = {
             message: messageText,
             sender: "user",
@@ -58,7 +52,6 @@ function FitBot() {
         }
 
         const sendMessages = [systemMessage, ...apiMessages];
-        console.log(sendMessages);
 
         try {
             const res = await axios.get("http://localhost:5000/users/fitbot", { 
@@ -68,7 +61,6 @@ function FitBot() {
                 }
             });
 
-            console.log(messages);
 
             setMessages([...newMessageArr, {
                 message: res.data.content,
@@ -80,8 +72,6 @@ function FitBot() {
             console.error(err);
         }
     }
-
-
 
 
     return (

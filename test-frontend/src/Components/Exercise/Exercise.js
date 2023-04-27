@@ -19,7 +19,6 @@ const Exercise = ({exercise, rowOfThree, remove, updateState}) => {
     useEffect(() => {
         setImg(localStorage.getItem(exercise.name));
         if(!localStorage.getItem(exercise.name)) {
-            console.log('new one');
             fetch(
                 'https://customsearch.googleapis.com/customsearch/v1?' +
                 new URLSearchParams({
@@ -51,7 +50,7 @@ const Exercise = ({exercise, rowOfThree, remove, updateState}) => {
         <h3 className={"feature-title" + (completed ? ' completed' : '')} onClick={()=> youtubeLink()}>{exercise.name}</h3>
         {remove && 
         <div className='icons'>
-            <div className='completion' onClick={() => {updateState(exercise); completed = true; console.log(exercise)}}>
+            <div className='completion' onClick={() => {updateState(exercise); completed = true;}}>
                 <img src={completed ? "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Red_X.svg/1200px-Red_X.svg.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Icons8_flat_checkmark.svg/768px-Icons8_flat_checkmark.svg.png"}/>
             </div>
             <div className='delete' onClick={() => remove(exercise)}>

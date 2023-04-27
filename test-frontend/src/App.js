@@ -1,7 +1,6 @@
 import './App.scss';
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from 'axios';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Database from './Components/Exercise/Database';
 import Navbar from './Components/Navbar/Navbar';
@@ -17,30 +16,12 @@ function App() {
 
     async function getLoginStatus(loggedInToken, id) {
       try {
-        // const res = await axios.get(`http://localhost:5000/users/login/${id}`, {
-        //   params: {
-        //     token: loggedInToken
-        //   }
-        // });
         const res = localStorage.getItem('token')?.length;
-        console.log(res);
         return res;
       } catch (err) {
           localStorage.removeItem('id');
           localStorage.removeItem('token');
           return false;
-      }
-    }
-
-    async function useLoginStatus() {
-      console.log('hnnn');
-      const loggedInToken = localStorage.getItem('token');
-      const id = localStorage.getItem('id');
-      if (!loggedInToken || !id)  return (false);
-      try {
-        return (await getLoginStatus(loggedInToken, id));  
-      } catch {
-        return (false);
       }
     }
 

@@ -4,24 +4,22 @@ from .models import User
 from uuid import uuid4
 import json
 import openai
+from environs import Env
+
+env = Env()
+env.read_env()
+
 
 
 blueprint = Blueprint("user", __name__, url_prefix='/users')
-openai.api_key = '6f462a816c194b438986a3eeac099694'
+openai.api_key = env.str("OPENAI_API_KEY")
 openai.api_type = "azure"
 openai.api_base = "https://fitflow.openai.azure.com/"
 openai.api_version = "2023-03-15-preview"
 
-@blueprint.route("/")
-def hello():
-    print("123")
-    print(type(db))
-    return "Hello World!"
-
 @blueprint.route('/<int:id>')
 def get_user_by_id(id):
     user = User.query.get(id)
-    print(user)
     return jsonify(user)
 
 @blueprint.route('/login', methods=['GET','POST'])
@@ -100,8 +98,6 @@ def update_user(id):
     if ('workout'  in user_data):
         user.workout = json.dumps(user_data['workout'])
         
-    print(user_data)
-
     db.session.commit()
 
     return jsonify(user), 201
@@ -115,8 +111,5 @@ def askFitBot():
         engine="gpt-35-turbo",
         messages=messages,
     )
-
-    print(response.choices[0].message)
-
 
     return response.choices[0].message, 201
