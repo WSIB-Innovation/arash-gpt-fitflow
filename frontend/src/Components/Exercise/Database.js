@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Database.scss';
 import axios from 'axios';
-import "../Exercise/Exercise.js"
-import Exercise from '../Exercise/Exercise.js';
+import "./Exercise.js"
+import Exercise from './Exercise.js';
 
 function Database() {
     const [exercises, setExercises] = useState([]);
